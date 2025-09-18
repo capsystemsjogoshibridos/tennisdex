@@ -1,0 +1,5 @@
+{
+  "name": "Tennisdex",
+  "description": "An application to track tennis match statistics and engage in a fun 'Power Card' duel based on player performance.",
+  "requestFramePermissions": []
+}
