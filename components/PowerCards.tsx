@@ -1,7 +1,5 @@
-
 import React, { useContext } from 'react';
 import { AppContext } from '../App';
-import { POWER_CARDS } from '../constants';
 import { AppContextType, Player, PowerCardData, ShotLevel } from '../types';
 
 const LEVEL_COLORS: Record<ShotLevel, { bg: string, border: string, text: string }> = {
@@ -20,8 +18,8 @@ const PowerCard: React.FC<{ card: PowerCardData, isSelected: boolean, onSelect: 
             onClick={onSelect}
             className={`w-full p-4 rounded-lg border-2 text-left transition-all duration-300 transform ${colors.bg} ${colors.border} ${selectionClass} hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1`}
         >
-            <h4 className={`font-bold text-lg ${colors.text}`}>{card.name}</h4>
-            <p className="text-sm text-slate-400">{card.description}</p>
+            <h4 className={`font-bold text-lg ${colors.text}`}>#{card.number} - {card.name}</h4>
+            <p className="text-sm text-slate-400 mt-1">{card.power}</p>
         </button>
     );
 };
@@ -39,7 +37,8 @@ const PlayerCardSelection: React.FC<{
             <div className="space-y-3">
                 {earnedCards.map((card, index) => (
                     <PowerCard
-                        key={card.instanceId || `${card.shotId}-${index}`}
+                        // FIX: Property 'shotId' does not exist on type 'PowerCardData'. Replaced with 'number'.
+                        key={card.instanceId || `${card.number}-${index}`}
                         card={card}
                         isSelected={selectedCard?.instanceId === card.instanceId}
                         onSelect={() => onSelectCard(card)}

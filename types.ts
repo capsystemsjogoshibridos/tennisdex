@@ -1,7 +1,7 @@
-
-export type Page = 'tenistometro' | 'powercards' | 'duelo' | 't_simples';
+export type Page = 'tenistometro' | 'powercards' | 'duelo' | 't_simples' | 'relatorio' | 'album';
 
 export type ShotLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
+export type CardRarity = 'Comum' | 'Incomum' | 'Rara' | 'Lendária';
 
 export interface Shot {
   name: string;
@@ -27,10 +27,12 @@ export interface Player {
 }
 
 export interface PowerCardData {
+    number: number;
     name: string;
-    description: string;
-    shotId: string;
-    level: ShotLevel;
+    power: string;
+    category: CardRarity;
+    level: ShotLevel; // Maps rarity to scoring level
+    image?: string; // For future image uploads
     instanceId?: string;
 }
 
@@ -46,4 +48,10 @@ export interface AppContextType {
     selectedCard2: PowerCardData | null;
     setSelectedCard2: React.Dispatch<React.SetStateAction<PowerCardData | null>>;
     updatePlayerScore: (playerId: 1 | 2, scoreInfo: { shotId?: string; level?: ShotLevel }, delta: number) => void;
+    resetGame: () => void;
+    shareReport: () => void;
+    seconds: number;
+    setSeconds: React.Dispatch<React.SetStateAction<number>>;
+    isActive: boolean;
+    setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 }

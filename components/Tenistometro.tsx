@@ -5,23 +5,9 @@ import { SHOT_CATEGORIES } from '../constants';
 import { AppContextType } from '../types';
 
 const Timer: React.FC = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
-        // FIX: Replaced NodeJS.Timeout with number, which is the correct type for setInterval in browser environments.
-        let interval: number | null = null;
-        if (isActive) {
-            interval = setInterval(() => {
-                setSeconds(seconds => seconds + 1);
-            }, 1000);
-        } else if (!isActive && seconds !== 0) {
-            if (interval) clearInterval(interval);
-        }
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isActive, seconds]);
+    const context = useContext(AppContext);
+    if (!context) return null;
+    const { seconds, isActive, setIsActive, setSeconds } = context;
 
     const handleReset = () => {
         setSeconds(0);

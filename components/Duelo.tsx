@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../App';
 import { AppContextType, PowerCardData, ShotLevel } from '../types';
@@ -24,8 +23,8 @@ const DuelCard: React.FC<{ card: PowerCardData, isWinner: boolean | null }> = ({
 
     return (
         <div className={`p-6 rounded-xl border-2 w-full max-w-sm mx-auto transition-all duration-700 ease-out-cubic ${colors.bg} ${colors.border} ${stateClasses}`}>
-            <h3 className={`font-bold text-2xl ${colors.text}`}>{card.name}</h3>
-            <p className="text-slate-300 mt-1">{card.description}</p>
+            <h3 className={`font-bold text-2xl ${colors.text}`}>#{card.number} - {card.name}</h3>
+            <p className="text-slate-300 mt-1">{card.power}</p>
         </div>
     );
 };

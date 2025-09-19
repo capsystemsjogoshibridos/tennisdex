@@ -1,26 +1,14 @@
 
+
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../App';
 import { SHOT_CATEGORIES } from '../constants';
 
 const Timer: React.FC = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [isActive, setIsActive] = useState(false);
+    const context = useContext(AppContext);
+    if (!context) return null;
+    const { seconds, isActive, setIsActive, setSeconds } = context;
 
-    useEffect(() => {
-        let interval: number | null = null;
-        if (isActive) {
-            interval = setInterval(() => {
-                setSeconds(seconds => seconds + 1);
-            }, 1000);
-        } else if (!isActive && seconds !== 0) {
-            if (interval) clearInterval(interval);
-        }
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isActive, seconds]);
-    
     const handleReset = () => {
         setSeconds(0);
         setIsActive(false);
