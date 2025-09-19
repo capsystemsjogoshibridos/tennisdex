@@ -1,5 +1,5 @@
 
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import { POWER_CARDS } from '../constants';
 import { AppContextType, Player, PowerCardData, ShotLevel } from '../types';
@@ -37,11 +37,11 @@ const PlayerCardSelection: React.FC<{
         <h3 className={`text-2xl font-bold mb-4 text-center ${playerColor}`}>{player.name}</h3>
         {earnedCards.length > 0 ? (
             <div className="space-y-3">
-                {earnedCards.map(card => (
+                {earnedCards.map((card, index) => (
                     <PowerCard
-                        key={card.shotId}
+                        key={card.instanceId || `${card.shotId}-${index}`}
                         card={card}
-                        isSelected={selectedCard?.shotId === card.shotId}
+                        isSelected={selectedCard?.instanceId === card.instanceId}
                         onSelect={() => onSelectCard(card)}
                     />
                 ))}
@@ -61,13 +61,8 @@ const PowerCards: React.FC = () => {
 
     const { player1, player2, selectedCard1, setSelectedCard1, selectedCard2, setSelectedCard2, setPage } = context;
 
-    const earnedCardsP1 = useMemo(() => {
-        return POWER_CARDS.filter(card => player1.scores[card.shotId] > 0);
-    }, [player1.scores]);
-
-    const earnedCardsP2 = useMemo(() => {
-        return POWER_CARDS.filter(card => player2.scores[card.shotId] > 0);
-    }, [player2.scores]);
+    const earnedCardsP1 = player1.awardedCards;
+    const earnedCardsP2 = player2.awardedCards;
     
     const canDuel = selectedCard1 && selectedCard2;
 

@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import { Page, AppContextType } from '../types';
@@ -26,9 +25,13 @@ const Header: React.FC = () => {
     return (
         <header className="bg-slate-800 p-4 rounded-xl shadow-2xl">
             <div className="flex flex-col sm:flex-row justify-between items-center">
-                <div className="flex items-center mb-4 sm:mb-0">
-                    <span className="text-3xl mr-2">🎾</span>
-                    <h1 className="text-2xl font-bold tracking-tight text-white">Tennisdex</h1>
+                <div className="text-center sm:flex sm:items-center sm:text-left mb-4 sm:mb-0">
+                    <span className="text-3xl sm:mr-4">🎾</span>
+                    <div>
+                        <h1 className="text-2xl font-bold tracking-tight text-white">Tennisdex</h1>
+                        <p className="text-xs text-slate-400">Criado por Christopher de Assis Pereira</p>
+                        <p className="text-xs text-slate-400 font-semibold">CAP Systems Jogos Híbridos</p>
+                    </div>
                 </div>
                 <nav className="flex space-x-2 sm:space-x-4">
                     <NavButton targetPage="tenistometro">Tenistômetro</NavButton>

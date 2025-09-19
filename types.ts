@@ -17,12 +17,13 @@ export interface ShotCategory {
 }
 
 export type PlayerScores = {
-  [shotId: string]: number;
+  [key: string]: number; // Can be shotId or level
 };
 
 export interface Player {
   name: string;
   scores: PlayerScores;
+  awardedCards: PowerCardData[];
 }
 
 export interface PowerCardData {
@@ -30,6 +31,7 @@ export interface PowerCardData {
     description: string;
     shotId: string;
     level: ShotLevel;
+    instanceId?: string;
 }
 
 export interface AppContextType {
@@ -43,4 +45,5 @@ export interface AppContextType {
     setSelectedCard1: React.Dispatch<React.SetStateAction<PowerCardData | null>>;
     selectedCard2: PowerCardData | null;
     setSelectedCard2: React.Dispatch<React.SetStateAction<PowerCardData | null>>;
+    updatePlayerScore: (playerId: 1 | 2, scoreInfo: { shotId?: string; level?: ShotLevel }, delta: number) => void;
 }

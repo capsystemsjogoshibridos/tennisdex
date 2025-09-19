@@ -1,5 +1,12 @@
 
-import { ShotCategory, PowerCardData } from './types';
+import { ShotCategory, PowerCardData, ShotLevel } from './types';
+
+export const RARITY_THRESHOLDS: Record<ShotLevel, number> = {
+  beginner: 9,
+  intermediate: 6,
+  advanced: 3,
+  expert: 1,
+};
 
 export const SHOT_CATEGORIES: ShotCategory[] = [
   {

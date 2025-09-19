@@ -20,6 +20,11 @@ const Timer: React.FC = () => {
             if (interval) clearInterval(interval);
         };
     }, [isActive, seconds]);
+    
+    const handleReset = () => {
+        setSeconds(0);
+        setIsActive(false);
+    };
 
     const formatTime = (timeInSeconds: number) => {
         const h = Math.floor(timeInSeconds / 3600).toString().padStart(2, '0');
@@ -31,12 +36,20 @@ const Timer: React.FC = () => {
     return (
         <div className="flex flex-col items-center bg-slate-800 p-4 rounded-lg shadow-lg">
             <div className="text-5xl font-mono tracking-widest text-cyan-400 mb-3">{formatTime(seconds)}</div>
-            <button
-                onClick={() => setIsActive(!isActive)}
-                className={`px-6 py-2 rounded-md font-semibold text-white transition-transform transform hover:scale-105 ${isActive ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}
-            >
-                {isActive ? 'Parar' : 'Iniciar'}
-            </button>
+            <div className="flex space-x-4">
+                <button
+                    onClick={() => setIsActive(!isActive)}
+                    className={`px-6 py-2 rounded-md font-semibold text-white transition-transform transform hover:scale-105 ${isActive ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}
+                >
+                    {isActive ? 'Parar' : 'Iniciar'}
+                </button>
+                 <button
+                    onClick={handleReset}
+                    className="px-6 py-2 rounded-md font-semibold text-white bg-slate-600 hover:bg-slate-700 transition-transform transform hover:scale-105"
+                >
+                    Reiniciar
+                </button>
+            </div>
         </div>
     );
 };
@@ -55,7 +68,7 @@ const TSimples: React.FC = () => {
     const context = useContext(AppContext);
     if (!context) return null;
     
-    const { player1, setPlayer1, player2, setPlayer2 } = context;
+    const { player1, setPlayer1, player2, setPlayer2, updatePlayerScore } = context;
 
     const handleNameChange = (player: 'player1' | 'player2', name: string) => {
         if (player === 'player1') {
@@ -63,21 +76,6 @@ const TSimples: React.FC = () => {
         } else {
             setPlayer2(p => ({ ...p, name }));
         }
-    };
-
-    const handleScoreChange = (player: 'player1' | 'player2', categoryLevel: string, delta: number) => {
-        const setPlayer = player === 'player1' ? setPlayer1 : setPlayer2;
-        setPlayer(p => {
-            const currentScore = p.scores[categoryLevel] || 0;
-            const newScore = Math.max(0, currentScore + delta);
-            return {
-                ...p,
-                scores: {
-                    ...p.scores,
-                    [categoryLevel]: newScore,
-                },
-            };
-        });
     };
 
     return (
@@ -116,8 +114,8 @@ const TSimples: React.FC = () => {
                                 <h4 className="text-lg font-semibold text-cyan-400">{player1.name}</h4>
                                 <ScoreCounter 
                                     score={player1.scores[category.level] || 0} 
-                                    onIncrement={() => handleScoreChange('player1', category.level, 1)}
-                                    onDecrement={() => handleScoreChange('player1', category.level, -1)}
+                                    onIncrement={() => updatePlayerScore(1, { level: category.level }, 1)}
+                                    onDecrement={() => updatePlayerScore(1, { level: category.level }, -1)}
                                     textColor="text-cyan-400"
                                 />
                             </div>
@@ -125,8 +123,8 @@ const TSimples: React.FC = () => {
                                 <h4 className="text-lg font-semibold text-pink-400">{player2.name}</h4>
                                 <ScoreCounter
                                     score={player2.scores[category.level] || 0}
-                                    onIncrement={() => handleScoreChange('player2', category.level, 1)}
-                                    onDecrement={() => handleScoreChange('player2', category.level, -1)}
+                                    onIncrement={() => updatePlayerScore(2, { level: category.level }, 1)}
+                                    onDecrement={() => updatePlayerScore(2, { level: category.level }, -1)}
                                     textColor="text-pink-400"
                                 />
                             </div>
