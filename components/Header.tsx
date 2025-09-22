@@ -33,7 +33,7 @@ const Header: React.FC = () => {
         <header className="bg-slate-800 p-4 rounded-xl shadow-2xl">
             <div className="flex flex-col sm:flex-row justify-between items-center">
                 <div className="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
-                    <img src="https://images2.imgbox.com/0e/06/ddM7tEiZ_o.png" alt="Fox Tennis Logo" className="w-60 h-auto mb-2"/>
+                    <img src="https://images2.imgbox.com/0e/06/ddM7tEiZ_o.png" alt="Fox Tennis Logo" className="w-40 h-auto mb-2"/>
                     <div className="text-center sm:text-left">
                         <p className="text-sm font-semibold text-orange-400">Fox Tennis</p>
                         <h1 className="text-2xl font-bold tracking-tight text-white">
