@@ -1,3 +1,6 @@
+// FIX: Import React types to resolve namespace errors.
+import type { Dispatch, SetStateAction } from 'react';
+
 export type Page = 'tenistometro' | 'powercards' | 'duelo' | 't_simples' | 'relatorio' | 'album';
 
 export type ShotLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
@@ -40,18 +43,18 @@ export interface AppContextType {
     page: Page;
     setPage: (page: Page) => void;
     player1: Player;
-    setPlayer1: React.Dispatch<React.SetStateAction<Player>>;
+    setPlayer1: Dispatch<SetStateAction<Player>>;
     player2: Player;
-    setPlayer2: React.Dispatch<React.SetStateAction<Player>>;
+    setPlayer2: Dispatch<SetStateAction<Player>>;
     selectedCard1: PowerCardData | null;
-    setSelectedCard1: React.Dispatch<React.SetStateAction<PowerCardData | null>>;
+    setSelectedCard1: Dispatch<SetStateAction<PowerCardData | null>>;
     selectedCard2: PowerCardData | null;
-    setSelectedCard2: React.Dispatch<React.SetStateAction<PowerCardData | null>>;
+    setSelectedCard2: Dispatch<SetStateAction<PowerCardData | null>>;
     updatePlayerScore: (playerId: 1 | 2, scoreInfo: { shotId?: string; level?: ShotLevel }, delta: number) => void;
     resetGame: () => void;
     shareReport: () => void;
     seconds: number;
-    setSeconds: React.Dispatch<React.SetStateAction<number>>;
+    setSeconds: Dispatch<SetStateAction<number>>;
     isActive: boolean;
-    setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsActive: Dispatch<SetStateAction<boolean>>;
 }
