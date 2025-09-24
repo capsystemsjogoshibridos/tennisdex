@@ -22,9 +22,12 @@ const DuelCard: React.FC<{ card: PowerCardData, isWinner: boolean | null }> = ({
     }
 
     return (
-        <div className={`p-6 rounded-xl border-2 w-full max-w-sm mx-auto transition-all duration-700 ease-out-cubic ${colors.bg} ${colors.border} ${stateClasses}`}>
-            <h3 className={`font-bold text-2xl ${colors.text}`}>#{card.number} - {card.name}</h3>
-            <p className="text-slate-300 mt-1">{card.power}</p>
+        <div className={`rounded-xl border-2 w-full max-w-sm mx-auto transition-all duration-700 ease-out-cubic ${colors.bg} ${colors.border} ${stateClasses} overflow-hidden`}>
+             {card.image && <img src={card.image} alt={card.name} className="w-full h-48 object-cover" />}
+             <div className="p-6">
+                <h3 className={`font-bold text-2xl ${colors.text}`}>#{card.number} - {card.name}</h3>
+                <p className="text-slate-300 mt-1">{card.power}</p>
+            </div>
         </div>
     );
 };
@@ -86,12 +89,6 @@ const Duelo: React.FC = () => {
         <div className="flex flex-col items-center space-y-6 min-h-[60vh]">
             <h2 className="text-4xl font-extrabold tracking-tight">DUELO MÁGICO</h2>
             
-            <img 
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAACBCAMAAAD2/ASNAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAGAUExURUxpcf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////x/PPgkAAACGdFJOUwAMFBslLjc9QElSVl5mam5xdXt/gIKHiY6Qk5SWl5iZmpugo6Wmq62ytbe6vsDFx8vO0dPV19na3N7g4uXn6Ors7/Dy9PX3+Pn6+/z9/v6aH5kAAAQ2SURBVHja7ZzZdqIwEIVREXFxwYIguKi4qLiL7//K1jYJSAgkkJPv5/UqV22S7jTSdCrpAQAAAAAAAAAAAAAAAAAAADiGb25u/nN2d/c9Z2dnf3C3t7f/Pby9vf0tPL29/S3k/f39b4B/9Xh3t/qY7/v8d/f15uPj28/3j/t9f/v5fX/v/n6ff2z3h+kE/n97/f/t/v3//cO01Xh02gMAAAAAAGD6qfFw3sE4kP9f8L8u/1//+1c+Pu7/XwEAAAAAADDdVHjY6QAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAACwQ1RgHQAAAAAAsENUYB0AAAAAALBDVGAdAAAAAAB2K/gC7N5F4vEwCQAAAABJRU5ErkJggg==" 
-                alt="Fox Tennis Logo" 
-                className="w-72 h-auto"
-            />
-
             <div className="w-full flex flex-col md:flex-row justify-around items-center gap-8 relative">
                  <div className={`flex flex-col items-center space-y-2 transition-all duration-500 ${winner === 2 ? 'opacity-50' : 'opacity-100'}`}>
                     <h4 className="text-2xl font-bold text-cyan-400">{player1.name}</h4>

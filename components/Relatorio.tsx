@@ -13,9 +13,12 @@ const LEVEL_COLORS: Record<ShotLevel, { bg: string, border: string, text: string
 const ReportCard: React.FC<{ card: PowerCardData }> = ({ card }) => {
     const colors = LEVEL_COLORS[card.level];
     return (
-        <div className={`p-3 rounded-lg border ${colors.bg} ${colors.border}`}>
-            <h4 className={`font-bold ${colors.text}`}>#{card.number} - {card.name}</h4>
-            <p className="text-sm text-slate-400">{card.power}</p>
+        <div className={`p-3 rounded-lg border ${colors.bg} ${colors.border} flex items-center gap-4`}>
+            {card.image && <img src={card.image} alt={card.name} className="w-12 h-12 object-cover rounded-md" />}
+            <div className="flex-grow">
+                <h4 className={`font-bold ${colors.text}`}>#{card.number} - {card.name}</h4>
+                <p className="text-sm text-slate-400">{card.power}</p>
+            </div>
         </div>
     );
 };

@@ -9,8 +9,8 @@ import TSimples from './components/TSimples';
 import Relatorio from './components/Relatorio';
 import Album from './components/Album';
 
-// Make sure to declare jsPDF, as it's loaded from a script tag.
-declare const jsPDF: any;
+// The jsPDF library is loaded from a script tag and available on the window object.
+declare const window: any;
 
 const initialScores = SHOT_CATEGORIES.reduce((acc, category) => {
     acc[category.level] = 0;
@@ -154,13 +154,13 @@ const App: React.FC = () => {
     }, []);
 
     const shareReport = useCallback(() => {
-        if (typeof jsPDF === 'undefined') {
-            alert('A biblioteca de PDF não foi carregada. Tente novamente.');
+        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
+            alert('A biblioteca de PDF не foi carregada. Tente novamente.');
             return;
         }
     
-        const { jsPDF: JSPDF } = jsPDF;
-        const doc = new JSPDF();
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
         const now = new Date();
         const fileName = `Tennisdex_Relatorio_${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}.pdf`;
     

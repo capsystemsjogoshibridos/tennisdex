@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { POWER_CARDS } from '../constants';
 import { PowerCardData, CardRarity, ShotLevel } from '../types';
+import CardModal from './CardModal';
 
 const RARITY_DETAILS: Record<CardRarity, { shotLevel: ShotLevel; title: string }> = {
     'Comum': { shotLevel: 'beginner', title: 'Comuns' },
@@ -16,20 +17,26 @@ const LEVEL_COLORS: Record<ShotLevel, { bg: string, border: string, text: string
     expert: { bg: 'bg-red-900/50', border: 'border-red-500', text: 'text-red-300', shadow: 'hover:shadow-red-500/20' },
 };
 
-const AlbumCard: React.FC<{ card: PowerCardData }> = ({ card }) => {
+const AlbumCard: React.FC<{ card: PowerCardData; onCardSelect: (card: PowerCardData) => void }> = ({ card, onCardSelect }) => {
     const colors = LEVEL_COLORS[card.level];
     return (
-        <div className={`flex flex-col h-full p-4 rounded-lg border-2 text-left transition-all duration-300 transform ${colors.bg} ${colors.border} ${colors.shadow} hover:shadow-2xl hover:-translate-y-1`}>
-            <div className="flex justify-between items-baseline">
-                <h4 className={`font-bold text-lg ${colors.text}`}>{card.name}</h4>
-                <span className="text-xs font-mono text-slate-400">#{String(card.number).padStart(2, '0')}</span>
+        <button
+            onClick={() => onCardSelect(card)}
+            className={`flex flex-col h-full rounded-lg border-2 text-left transition-all duration-300 transform ${colors.bg} ${colors.border} ${colors.shadow} hover:shadow-2xl hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500`}
+        >
+            {card.image && <img src={card.image} alt={card.name} className="w-full h-48 object-contain bg-black" />}
+            <div className="p-4 flex-grow flex flex-col">
+                <div className="flex justify-between items-baseline">
+                    <h4 className={`font-bold text-lg ${colors.text}`}>{card.name}</h4>
+                    <span className="text-xs font-mono text-slate-400">#{String(card.number).padStart(2, '0')}</span>
+                </div>
+                <p className="text-sm text-slate-300 mt-2 flex-grow">{card.power}</p>
             </div>
-            <p className="text-sm text-slate-300 mt-2 flex-grow">{card.power}</p>
-        </div>
+        </button>
     );
 };
 
-const RaritySection: React.FC<{ rarity: CardRarity }> = ({ rarity }) => {
+const RaritySection: React.FC<{ rarity: CardRarity; onCardSelect: (card: PowerCardData) => void }> = ({ rarity, onCardSelect }) => {
     const details = RARITY_DETAILS[rarity];
     const cards = POWER_CARDS.filter(c => c.category === rarity);
     const colors = LEVEL_COLORS[details.shotLevel];
@@ -37,9 +44,9 @@ const RaritySection: React.FC<{ rarity: CardRarity }> = ({ rarity }) => {
     return (
         <section>
             <h3 className={`text-2xl font-bold mb-4 ${colors.text}`}>{details.title} ({cards.length})</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {cards.map(card => (
-                    <AlbumCard key={card.number} card={card} />
+                    <AlbumCard key={card.number} card={card} onCardSelect={onCardSelect} />
                 ))}
             </div>
         </section>
@@ -48,18 +55,24 @@ const RaritySection: React.FC<{ rarity: CardRarity }> = ({ rarity }) => {
 
 
 const Album: React.FC = () => {
+    const [selectedCard, setSelectedCard] = useState<PowerCardData | null>(null);
+
     return (
-        <div className="space-y-10">
-            <div className="text-center">
-                <h2 className="text-3xl font-bold">Álbum de Power Cards</h2>
-                <p className="text-slate-400 mt-2">Todas as cartas colecionáveis do Tennisdex.</p>
+        <>
+            <div className="space-y-10">
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold">Álbum de Power Cards</h2>
+                    <p className="text-slate-400 mt-2">Todas as cartas colecionáveis do Tennisdex.</p>
+                </div>
+
+                <RaritySection rarity="Comum" onCardSelect={setSelectedCard} />
+                <RaritySection rarity="Incomum" onCardSelect={setSelectedCard} />
+                <RaritySection rarity="Rara" onCardSelect={setSelectedCard} />
+                <RaritySection rarity="Lendária" onCardSelect={setSelectedCard} />
             </div>
 
-            <RaritySection rarity="Comum" />
-            <RaritySection rarity="Incomum" />
-            <RaritySection rarity="Rara" />
-            <RaritySection rarity="Lendária" />
-        </div>
+            {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} />}
+        </>
     );
 };
 
